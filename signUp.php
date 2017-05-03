@@ -29,7 +29,7 @@
 	 	<input class="cuadro" type="text" name="rep_pass" placeholder="*Repita Contraseña" required><br> <br>
 	 	<input class="cuadro" type="number" name="nac"  min="0" max="9999" placeholder="*Año Nacimiento" required><br> <br>
 		<p>Seleccione la categoria<p>
-		<select class="cuadro" type="text" name="genero" required>
+		<select class="cuadro" type="text" name="genero" onchange="myFunction()" id="drop" required>
 		<?php
 			$estilos= array();
 			$db = @mysqli_connect('localhost','root','','SpotiChat');
@@ -42,7 +42,12 @@
 			echo "<option> otro </option> ";
 			@mysqli_close($db);
 		?>
-	</select><br><br>
+		</select><br><br>
+		<div class="">
+			Si desea utilizar otro genero:
+			<input type="checkbox" name="otro_genero" id="yourBox" /><br><br>
+		</div>
+		<input class="cuadro" type="text" name="genero2" id="yourText" disabled /><br><br>
 	 	<input class="button-mod" type="submit" value="Enviar">
  	</form>
 
@@ -97,6 +102,8 @@
 		@mysqli_close($db);
     };
 ?>
+
+<script src="js/register.js"></script>
 
 </body>
 

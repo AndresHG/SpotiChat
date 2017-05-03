@@ -54,7 +54,7 @@
 	$fecha = getdate();
 
 	if($recep != 'todos'){
-		$sql="INSERT INTO mensajes VALUES ('$id', '$asun', '$emisor', '$recep', '$texto', NULL, '$fecha[year]-$fecha[mon]-$fecha[mday]');";
+		$sql="INSERT INTO mensajes VALUES ('$id', '$asun', '$emisor', '$recep', '$texto', NULL, '$fecha[year]-$fecha[mon]-$fecha[mday]', 0, 0, 0);";
 
 		mysqli_query($db, $sql);
 
@@ -70,8 +70,7 @@
 		};
 	}
 	else{
-		echo "a veeer";
-		$sql="INSERT INTO mensajes VALUES ('$id', '$asun', '$emisor', null, '$texto', NULL, '$fecha[year]-$fecha[mon]-$fecha[mday]');";
+		$sql="INSERT INTO mensajes VALUES ('$id', '$asun', '$emisor', null, '$texto', NULL, '$fecha[year]-$fecha[mon]-$fecha[mday]', 0, 0, 0);";
 	    mysqli_query($db, $sql);
 
 			header("Location: home.php");

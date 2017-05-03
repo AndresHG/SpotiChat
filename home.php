@@ -81,8 +81,9 @@
 				echo "Asunto: $mensajes->asunto <br/> <br/>";
 				echo "$mensajes->texto <br/><br/><br/>";
 				if($mensajes->emisor == $_SESSION['username']){
-					echo "<form action='' method='post'> <input type='submit' name='del_button' value='borrar' /> </form>";
-					if(isset($_POST['del_button'])) {
+					$nom = 'buton' . $mensajes->id;
+					echo "<form action='' method='post'> <input type='submit' name='$nom' value='borrar' /> </form>";
+					if(isset($_POST[$nom])) {
 		    		$sql_del="UPDATE mensajes SET borrado_emisor = 1 where id = $mensajes->id;";
 						mysqli_query($db, $sql_del);
 						header("Location: home.php");
