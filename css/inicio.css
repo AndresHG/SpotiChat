@@ -11,7 +11,7 @@ body {
 
 
 .topnav {
-  background-color : orange;
+  background-color : green;
 }
 
 
@@ -58,7 +58,7 @@ img#logo{
 }
 
 .profile-usertitle-name {
-  color: orange;
+  color: green;
   font-size: 16px;
   font-weight: 600;
   margin-bottom: 7px;
@@ -66,7 +66,7 @@ img#logo{
 
 .profile-usertitle-job {
   text-transform: uppercase;
-  color: orange;
+  color: green;
   font-size: 12px;
   font-weight: 600;
   margin-bottom: 15px;
@@ -114,7 +114,7 @@ img#logo{
 
 .profile-usermenu ul li a:hover {
   background-color: #fafcfd;
-  color: orange;
+  color: green;
 }
 
 .profile-usermenu ul li.active {
@@ -122,12 +122,12 @@ img#logo{
 }
 
 .profile-usermenu ul li.active a {
-  color: orange;
+  color: green;
   /*border-radius: 3px;*/
   background-color: #f6f9fb;
-  border-left: 2px solid orange;
-    /*border-top: 2px solid orange;
-  border-bottom:   2px solid orange;*/
+  border-left: 2px solid green;
+    /*border-top: 2px solid green;
+  border-bottom:   2px solid green;*/
   margin-left: -5px;
 
 }
@@ -137,6 +137,11 @@ img#logo{
   padding: 20px;
   background: #fff;
   min-height: 460px;
+}
+
+.over-scroll{
+  max-height: 200px;
+  overflow-y: scroll;
 }
 
 
@@ -173,8 +178,8 @@ img#logo{
 }
 
 .buscar-partido-submit {
-  background: orange;
-  border-color: orange;
+  background: green;
+  border-color: green;
   border-radius: 0px;
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
@@ -185,7 +190,7 @@ img#logo{
 .buscar-partido-distrito:focus,
 .buscar-partido-date > .form-control:focus,
 .buscar-partido-nombre:focus {
-  border-color: orange;
+  border-color: green;
   outline: 0;
   -webkit-box-shadow: none; /*inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(255, 171, 44, 0.4);*/
           box-shadow: none; /*inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(255, 171, 44, 0.4);*/
@@ -197,7 +202,7 @@ img#logo{
 .buscar-partido-date > .input-group-addon:hover {
   cursor:pointer;
   background-color: rgba(255, 171, 44, 0.4);
-  border-color: orange;
+  border-color: green;
   outline: 0;
   -webkit-box-shadow: none; /*inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(255, 171, 44, 0.4);*/
           box-shadow: none; /*inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(255, 171, 44, 0.4);*/
@@ -275,4 +280,49 @@ img#logo{
 
 .alto-formulario{
   min-height: 100px;
+}
+
+.nav-header a{
+  color: white !important;
+}
+
+.nav-header ul li a:hover {
+  background-color: #fafcfd;
+  color: green;
+}
+
+.nav-header ul li.active a {
+  color: green !important;
+  /*border-radius: 3px;*/
+  background-color: #f6f9fb;
+  border-left: 2px solid green;
+    /*border-top: 2px solid green;
+  border-bottom:   2px solid green;*/
+  margin-left: -5px;
+
+}
+
+.perfil-mensaje{
+  max-height: 30px;
+  max-width: 30px;
+  min-height: 15px;
+  min-width: 15px;
+  float: right !important;
+
+}
+
+.sin-padding-right{
+  padding-right: 0px;
+}
+
+.texto-centrado{
+  padding-top: 5px;
+}
+
+@media (max-width: 454px) {
+  .sin-padding-right{
+    padding-left: 0px;
+    padding-top: -8px;
+    padding-bottom: -8px;
+  }
 }

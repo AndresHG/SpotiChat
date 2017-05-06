@@ -90,6 +90,38 @@
 					};
 				};
 				echo "----------------------------------------------------------------------------------------------------- <br/><br/><br/>";
+			};
+	};
+
+	$sql="SELECT * , DATE_FORMAT(fecha, '%d/%m/%Y') AS fecha FROM mensajes inner join miembros on grupo = id_grupo
+	WHERE receptor is null and grupo is not null and borrado_emisor is false and nick = '$actual' ORDER BY fecha DESC, id DESC";
+	$consulta=mysqli_query($db, $sql);
+
+	if (mysqli_num_rows($consulta)==0){
+
+		echo ' <br/><br/> No hay mensajes de grupo disponibles <br/><br/>';
+	}else{
+		echo "------------------------------------<br/>";
+		echo "Mensajes por grupo: <br/>";
+		echo "------------------------------------ <br/><br/>";
+
+		while ($mensajes=mysqli_fetch_object($consulta)){
+
+			echo "Emisor: $mensajes->emisor -------------------------";
+			echo "Grupo: $mensajes->grupo ------------------------";
+			echo "Fecha: $mensajes->fecha <br/> <br/>";
+			echo "Asunto: $mensajes->asunto <br/> <br/>";
+			echo "$mensajes->texto <br/><br/><br/>";
+			if($mensajes->emisor == $_SESSION['username']){
+				$nom = 'buton' . $mensajes->id;
+				echo "<form action='' method='post'> <input type='submit' name='$nom' value='borrar' /> </form>";
+				if(isset($_POST[$nom])) {
+					$sql_del="UPDATE mensajes SET borrado_emisor = 1 where id = $mensajes->id;";
+					mysqli_query($db, $sql_del);
+					header("Location: home.php");
+				};
+			};
+			echo "----------------------------------------------------------------------------------------------------- <br/><br/><br/>";
 		};
 	};
 

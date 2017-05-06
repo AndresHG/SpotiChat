@@ -2,7 +2,7 @@
 <html>
 
 <head>
-	<title>Bolochat</title>
+	<title>SpotyChat</title>
 
 	  <!--Metadatos-->
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -65,7 +65,11 @@
 		$rep_pass=$_POST['rep_pass'];
 		$fecha = getdate();
 		$edad=$fecha['year'] - $_POST['nac'];
-		$genero=strtolower($_POST['genero']);
+		if($_POST['genero'] == 'otro' and isset($_POST['genero2'])){
+			$genero=strtolower($_POST['genero2']);
+		}else {
+			$genero=strtolower($_POST['genero']);
+		}
 
 		$sql="SELECT nick FROM usuarios WHERE nick='$user'";
 		$consulta=mysqli_query($db, $sql);

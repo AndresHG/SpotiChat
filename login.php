@@ -60,7 +60,7 @@
 				$_SESSION['loggedin'] = true;
     		$_SESSION['username'] = $user;
 
-    			header("Location: home.php");
+    			header("Location: inicio.php");
 
 			}else{
 				echo "<script type=''>

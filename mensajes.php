@@ -4,14 +4,13 @@ session_start();
 if(!isset($_SESSION['username'])){
     header('location:login.php');
 }
-
- ?>
+?>
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <title>Home</title>
+  <title>Mensajes</title>
 
 
 
@@ -26,6 +25,7 @@ if(!isset($_SESSION['username'])){
   <link rel="stylesheet" href="css/bootstrap.css">
   <link rel="stylesheet" href="css/inicio.css">
   <link rel="stylesheet" href="css/listaPartidos.css">
+  <link rel="stylesheet" href="css/mensajes.css">
 
   <!-- Add icon library -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -56,15 +56,16 @@ if(!isset($_SESSION['username'])){
 
       <div class="nav-header hidden-xs hidden-sm" style="float:left">
         <ul class="nav navbar-nav">
-          <li class="active"><a href="inicio.php">
+          <li><a href="inicio.php">
           <i class="glyphicon glyphicon-home"></i>
           Home </a></li>
-          <li><a href="inicio.php">
+          <li><a href="inicio.html">
           <i class="glyphicon glyphicon-send"></i>
           Grupos </a></li>
-          <li><a href="mensajes.php">
+          <li class="active"><a href="mensajes.php">
           <i class="glyphicon glyphicon-envelope"></i>
           <?php
+
             $db = @mysqli_connect('localhost','root','','SpotiChat');
             $actual = $_SESSION['username'];
             $sql="SELECT *  FROM mensajes
@@ -111,20 +112,10 @@ if(!isset($_SESSION['username'])){
 				</div>
 				<!-- END SIDEBAR USER TITLE -->
 				<!-- SIDEBAR BUTTONS -->
-        <form class="" action="" method="post">
-          <div class="profile-userbuttons">
-  					<button onclick="window.location.href='miPerfil.html'" type="button" class="btn btn-success btn-sm">Mi perfil</button>
-            <?php
-              echo "<input type='submit' class='btn btn-danger btn-sm' name='logout' value='Logout' />";
-
-              if(isset($_POST['logout'])) {
-                session_unset();
-                session_destroy();
-                header("Location:login.php");
-              };
-             ?>
-  				</div>
-        </form>
+				<div class="profile-userbuttons">
+					<button onclick="window.location.href='miPerfil.html'" type="button" class="btn btn-success btn-sm">Mi perfil</button>
+					<button onclick="window.location.href='index.html'" type="button" class="btn btn-danger btn-sm">Logout</button>
+				</div>
         <div class="hidden-xs hidden-sm">
           <br>
         </div>
@@ -132,7 +123,7 @@ if(!isset($_SESSION['username'])){
 				<!-- SIDEBAR MENU -->
 				<div class="profile-usermenu hidden-md hidden-lg">
 					<ul class="nav">
-            <li class="active">
+            <li>
               <a href="inicio.php">
               <i class="glyphicon glyphicon-home"></i>
               Home </a></li>
@@ -140,7 +131,7 @@ if(!isset($_SESSION['username'])){
               <a href="inicio.html">
               <i class="glyphicon glyphicon-send"></i>
               Grupos </a></li>
-              <li>
+              <li class="active">
                 <a href="mensajes.php">
               <i class="glyphicon glyphicon-envelope"></i>
               <?php
@@ -156,22 +147,20 @@ if(!isset($_SESSION['username'])){
                     echo "Mensajes <span class='badge'>$nuevos</span></a></li>";
                 }
                ?>
-
 					</ul>
 				</div>
 				<!-- END MENU -->
 			</div>
 		</div>
-		<div class="col-xs-12 col-sm-12 col-md-9 over-scroll">
+		<div class="col-xs-12 col-sm-12 col-md-9">
       <div class="profile-content ">
 
         <?php
 
       	$db = @mysqli_connect('localhost','root','','SpotiChat');
-        mysqli_set_charset($db, 'utf8');
         $actual = $_SESSION['username'];
 
-        $sql="SELECT * , DATE_FORMAT(fecha, '%d/%m/%Y') AS fecha FROM mensajes WHERE receptor is null and grupo is null and borrado_emisor is false ORDER BY fecha DESC, id DESC";
+        $sql="SELECT * , DATE_FORMAT(fecha, '%d/%m/%Y') AS fecha FROM mensajes WHERE receptor = '$actual' and borrado_receptor is false ORDER BY fecha DESC, id DESC";
     		$consulta=mysqli_query($db, $sql);
 
     		if (mysqli_num_rows($consulta)==0){
@@ -184,25 +173,48 @@ if(!isset($_SESSION['username'])){
             echo "<div class='panel panel-default'>
               <div class='panel-heading'>
                <div class='panel-title'>
-                 <a>
-                   <div class='row' >
-                     <div class='col-xs-2 col-md-2 profile-userpic sin-padding-right'><img src='img/iconos/$imgSelected.png' class='img-responsive perfil-mensaje' alt=''></div>
-                     <div class='col-xs-5 col-md-3 texto-centrado'>$mensajes->emisor</div>
-                     <div class='col-xs-5 col-md-2 col-md-offset-5 texto-centrado'>$mensajes->fecha</div>
+                 <a>";
+                 if($mensajes->leido == false){
+                   echo "<div class='row blue-text'>";
+                 }else{
+                   echo "<div class='row'>";
+                 }
+                     echo "<div class='col-xs-2 col-md-2 profile-userpic sin-padding-right'><img src='img/iconos/$imgSelected.png' class='img-responsive perfil-mensaje' alt=''></div>
+                     <div class='col-xs-4 col-md-3 texto-centrado'>$mensajes->emisor</div>
+                     <div class='hidden-xs hidden-sm col-md-5 texto-centrado'>$mensajes->asunto</div>
+                     <div class='col-xs-6 col-md-2 texto-centrado'>$mensajes->fecha</div>
                  </div>
                  </a>
                </div>
               </div>
               <div>";
+              if(!($mensajes->asunto[0]=='R' and $mensajes->asunto[1]=='e' and $mensajes->asunto[2]==':')){
+                $mensajes->asunto = 'Re: ' . $mensajes->asunto;
+              }
               echo "<div class='panel-body back-white'>
                  <p> $mensajes->texto </p>
-                 <center>
-                 <a href='crearMensaje.php?receptor=$mensajes->emisor&asunto=Re: $mensajes->asunto' class='btn btn-info' role='button'>Responder</a> <br/>";
-                 echo "</center>
+                 <br>
+                 <div class='row'>
+                   <div class='col-md-6 col-xs-6'>
+                      <a href='crearMensaje.php?receptor=$mensajes->emisor&asunto=$mensajes->asunto' class='btn btn-info flota-derecha' role='button'>Responder</a>
+                    </div>";
+                   $nom2 = 'buton' . $mensajes->id;
+                   echo "<div class='col-md-6 col-xs-6'>
+                      <form action='' method='post'>
+                        <input type='submit' class='btn btn-info flota-izquierda' name='$nom2' value='borrar' />
+                      </form>
+                   </div>";
+             				if(isset($_POST[$nom2])) {
+             	    		$sql_del="UPDATE mensajes SET borrado_receptor = 1 where id = $mensajes->id;";
+             					mysqli_query($db, $sql_del);
+             				};
+                 echo "</div>
                </div>
               </div>
               </div>";
           };
+          $sql_leidos="UPDATE mensajes SET leido = true where receptor = '$actual' and borrado_receptor is false;";
+          mysqli_query($db, $sql_leidos);
         }
           ?>
 
@@ -238,6 +250,7 @@ if(!isset($_SESSION['username'])){
               <button onclick="myReload(this)" type="submit" name='enviarSpoty' class="btn-formulario sendbtn"> Enviar </button>
               <?php
               if(isset($_POST['enviarSpoty']) && $_POST['cuerpoSpoty'] != '') {
+
               	$db = @mysqli_connect('localhost','root','','SpotiChat');
                 $texto=$_POST['cuerpoSpoty'];
                 $sql="SELECT id FROM mensajes";

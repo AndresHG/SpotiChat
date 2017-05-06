@@ -6,18 +6,18 @@
 .button-ver{
 	float: right;
 	width: 90px;
-	background-color: orange;
-	border-color: orange;
+	background-color: green;
+	border-color: green;
 }
 
-.back-orange{
-	background-color: orange;
-	border-color: orange;
+.back-green{
+	background-color: green;
+	border-color: green;
 }
 
-.back-orange2{
-	background-color: orange;
-	border: 1px solid orange;
+.back-green2{
+	background-color: green;
+	border: 1px solid green;
 }
 
 .mouse-over:active, .mouse-over:focus, .mouse-over:hover{
@@ -25,9 +25,9 @@
   border-color: #FF4500;
 }
 
-.back-orange2 > .panel-heading{
-	background-color: orange;
-	border: 1px solid orange;
+.back-green2 > .panel-heading{
+	background-color: green;
+	border: 1px solid green;
 }
 
 .white{

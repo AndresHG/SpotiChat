@@ -1,3 +1,11 @@
+
+<?php
+session_start();
+if(!isset($_SESSION['username'])){
+    header('location:login.php');
+}
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,8 +40,6 @@
 
 
  <?php
-
-	session_start();
 
   $procesando=isset($_POST['receptor'])?$_POST['asunto']:null;
   if($procesando!=null){
