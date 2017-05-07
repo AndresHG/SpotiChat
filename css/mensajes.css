@@ -11,3 +11,11 @@
 .flota-izquierda{
   float: left;
 }
+
+.alto-correo-nuevo{
+  max-height: 35px;
+}
+
+.nuevo-mensaje{
+  font-size: 20px;
+}

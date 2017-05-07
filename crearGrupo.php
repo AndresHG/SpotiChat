@@ -40,6 +40,7 @@ if(!isset($_SESSION['username']) or $_SESSION['username'] != 'admin'){
  		<?php
  			$estilos= array();
  			$db = @mysqli_connect('localhost','root','','SpotiChat');
+      mysqli_set_charset($db, 'utf8');
 
  			$sql="SELECT * FROM generos";
  		  $consulta=mysqli_query($db, $sql);
@@ -105,7 +106,7 @@ if(!isset($_SESSION['username']) or $_SESSION['username'] != 'admin'){
         $sql="SELECT nick FROM usuarios WHERE edad <= '$max_edad' and edad >= '$min_edad' and musica = '$genero'";
         $consulta = mysqli_query($db, $sql);
         while ($usuario=mysqli_fetch_object($consulta)){
-          $sql="INSERT INTO miembros VALUES ('$usuario->nick', '$grupo');";
+          $sql="INSERT INTO miembros VALUES ('$usuario->nick', '$grupo', -1);";
           mysqli_query($db, $sql);
         }
 

@@ -33,6 +33,7 @@
 		<?php
 			$estilos= array();
 			$db = @mysqli_connect('localhost','root','','SpotiChat');
+			mysqli_set_charset($db, 'utf8');
 
 			$sql="SELECT * FROM generos";
 		  $consulta=mysqli_query($db, $sql);
@@ -59,6 +60,7 @@
 	if($procesando!=null){
 
 		$db = @mysqli_connect('localhost','root','','SpotiChat');
+		mysqli_set_charset($db, 'utf8');
 
 		$user=$_POST['user'];
 		$pass=$_POST['pass'];

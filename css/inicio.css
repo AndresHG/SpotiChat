@@ -139,8 +139,8 @@ img#logo{
   min-height: 460px;
 }
 
-.over-scroll{
-  max-height: 200px;
+.over-scroll2{
+  max-height: 1000px;
   overflow-y: scroll;
 }
 

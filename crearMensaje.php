@@ -50,6 +50,7 @@ if(!isset($_SESSION['username'])){
 
 	//conectamos con la bd
 	$db = @mysqli_connect('localhost','root','','SpotiChat');
+  mysqli_set_charset($db, 'utf8');
 	//consultamos el id del nuevo mensaje
 	$sql="SELECT id FROM mensajes";
 	$consulta=mysqli_query($db, $sql);

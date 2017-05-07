@@ -24,6 +24,7 @@
 	session_start();
 
 	$db = @mysqli_connect('localhost','root','','SpotiChat');
+	mysqli_set_charset($db, 'utf8');
 
 		$actual = $_SESSION['username'];
 		$sql="SELECT * , DATE_FORMAT(fecha, '%d/%m/%Y') AS fecha FROM mensajes WHERE receptor = '$actual' and borrado_receptor is false ORDER BY id DESC";

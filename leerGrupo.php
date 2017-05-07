@@ -4,13 +4,14 @@ session_start();
 if(!isset($_SESSION['username'])){
     header('location:login.php');
 }
-?>
+
+ ?>
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <title>Mensajes</title>
+  <title><?php echo htmlspecialchars($_GET["grupo"]); ?></title>
 
 
 
@@ -59,33 +60,23 @@ if(!isset($_SESSION['username'])){
           <li><a href="inicio.php">
           <i class="glyphicon glyphicon-home"></i>
           Home </a></li>
+          <li><a href="grupos.php">
+          <i class="glyphicon glyphicon-send"></i>
+          Grupos </a></li>
+          <li><a href="mensajes.php">
+          <i class="glyphicon glyphicon-envelope"></i>
           <?php
-          $db = @mysqli_connect('localhost','root','','SpotiChat');
-          mysqli_set_charset($db, 'utf8');
-          $actual = $_SESSION['username'];
-
-          echo "<li><a href='grupos.php'>
-          <i class='glyphicon glyphicon-send'></i>";
-          $sql="SELECT *  FROM miembros WHERE nick = '$actual' and sin_leer != 0";
-          $consulta=mysqli_query($db, $sql);
-          $nuevos = mysqli_num_rows($consulta);
-          if ($nuevos==0){
-            echo "  Grupos </a></li>";
-          }else{
-              echo "  Grupos <span class='badge'>$nuevos</span></a></li>";
-          }
-
-          echo "<li class='active'><a href='mensajes.php'>
-          <i class='glyphicon glyphicon-envelope'></i>";
-
+            $db = @mysqli_connect('localhost','root','','SpotiChat');
+            mysqli_set_charset($db, 'utf8');
+            $actual = $_SESSION['username'];
             $sql="SELECT *  FROM mensajes
             WHERE receptor = '$actual' and borrado_receptor is false and leido is false";
             $consulta=mysqli_query($db, $sql);
             $nuevos = mysqli_num_rows($consulta);
             if ($nuevos==0){
-              echo "  Mensajes</a></li>";
+              echo "Mensajes</a></li>";
             }else{
-                echo "  Mensajes <span class='badge'>$nuevos</span></a></li>";
+                echo "Mensajes <span class='badge'>$nuevos</span></a></li>";
             }
             if($_SESSION['username'] =='admin'){
               echo "<li><a href='crearGrupo.php'>
@@ -152,24 +143,17 @@ if(!isset($_SESSION['username'])){
               <a href="inicio.php">
               <i class="glyphicon glyphicon-home"></i>
               Home </a></li>
+              <li>
+              <a href="grupos.php">
+              <i class="glyphicon glyphicon-send"></i>
+              Grupos </a></li>
+              <li>
+                <a href="mensajes.php">
+              <i class="glyphicon glyphicon-envelope"></i>
               <?php
-              $db = @mysqli_connect('localhost','root','','SpotiChat');
-              mysqli_set_charset($db, 'utf8');
-              $actual = $_SESSION['username'];
-
-              echo "<li><a href='grupos.php'>
-              <i class='glyphicon glyphicon-send'></i>";
-              $sql="SELECT *  FROM miembros WHERE nick = '$actual' and sin_leer != 0";
-              $consulta=mysqli_query($db, $sql);
-              $nuevos = mysqli_num_rows($consulta);
-              if ($nuevos==0){
-                echo "Grupos </a></li>";
-              }else{
-                  echo "Grupos <span class='badge'>$nuevos</span></a></li>";
-              }
-
-              echo "<li class='active'><a href='mensajes.php'>
-              <i class='glyphicon glyphicon-envelope'></i>";
+                $db = @mysqli_connect('localhost','root','','SpotiChat');
+                mysqli_set_charset($db, 'utf8');
+                $actual = $_SESSION['username'];
                 $sql="SELECT *  FROM mensajes
                 WHERE receptor = '$actual' and borrado_receptor is false and leido is false";
                 $consulta=mysqli_query($db, $sql);
@@ -185,6 +169,7 @@ if(!isset($_SESSION['username'])){
                   Crear Grupo </a></li>";
                 }
                ?>
+
 					</ul>
 				</div>
 				<!-- END MENU -->
@@ -193,22 +178,14 @@ if(!isset($_SESSION['username'])){
 		<div class="col-xs-12 col-sm-12 col-md-9">
       <div class="profile-content ">
 
-        <form class="container-fluid" action="enviarMensajePersonal.php" method="post">
-          <p class="nuevo-mensaje"><b>Nuevo mensaje</b></p>
-          <textarea name="receptor" class="form-control alto-correo-nuevo" placeholder='Destinatario' rows="8" cols="80" required=""></textarea>
-          <textarea name="asunto" class="form-control alto-correo-nuevo" placeholder='Asunto' rows="8" cols="80" required=""></textarea>
-          <textarea name="mensaje" class="alto-formulario form-control" placeholder='Cuerpo del mensaje...' rows="8" cols="80"></textarea>
-          <br>
-          <button type="submit" class="btn btn-success">Enviar</button>
-          <br><br>
-        </form>
         <?php
 
       	$db = @mysqli_connect('localhost','root','','SpotiChat');
         mysqli_set_charset($db, 'utf8');
         $actual = $_SESSION['username'];
+        $grupo = htmlspecialchars($_GET["grupo"]);
 
-        $sql="SELECT * , DATE_FORMAT(fecha, '%d/%m/%Y') AS fecha FROM mensajes WHERE receptor = '$actual' and borrado_receptor is false ORDER BY fecha DESC, id DESC";
+        $sql="SELECT * , DATE_FORMAT(fecha, '%d/%m/%Y') AS fecha FROM mensajes WHERE grupo = '$grupo' and borrado_receptor is false ORDER BY fecha, id";
     		$consulta=mysqli_query($db, $sql);
 
     		if (mysqli_num_rows($consulta)==0){
@@ -236,35 +213,28 @@ if(!isset($_SESSION['username'])){
                </div>
               </div>
               <div>";
-              if(!($mensajes->asunto[0]=='R' and $mensajes->asunto[1]=='e' and $mensajes->asunto[2]==':')){
-                $mensajes->asunto = 'Re: ' . $mensajes->asunto;
-              }
               echo "<div class='panel-body back-white'>
                  <p> $mensajes->texto </p>
                  <br>
-                 <div class='row'>
-                   <div class='col-md-6 col-xs-6'>
-                      <a href='crearMensaje.php?receptor=$mensajes->emisor&asunto=$mensajes->asunto' class='btn btn-success flota-derecha' role='button'>Responder</a>
-                    </div>";
-                   $nom2 = 'buton' . $mensajes->id;
-                   echo "<div class='col-md-6 col-xs-6'>
-                      <form action='' method='post'>
-                        <input type='submit' class='btn btn-success flota-izquierda' name='$nom2' value='borrar' />
-                      </form>
-                   </div>";
-             				if(isset($_POST[$nom2])) {
-             	    		$sql_del="UPDATE mensajes SET borrado_receptor = 1 where id = $mensajes->id;";
-             					mysqli_query($db, $sql_del);
-             				};
-                 echo "</div>
                </div>
               </div>
               </div>";
           };
-          $sql_leidos="UPDATE mensajes SET leido = true where receptor = '$actual' and borrado_receptor is false;";
-          mysqli_query($db, $sql_leidos);
         }
-          ?>
+        $sql_leidos="UPDATE mensajes SET leido = true where grupo = '$grupo' and borrado_receptor is false;";
+        mysqli_query($db, $sql_leidos);
+        $sql_leidos="UPDATE miembros SET sin_leer = 0 where id_grupo = '$grupo' and  nick = '$actual';";
+        mysqli_query($db, $sql_leidos);
+        echo "
+          <form class='container-fluid' action='enviarMensajeGrupal.php?grupo=$grupo' method='post'>
+            <p class='nuevo-mensaje'><b>Nuevo mensaje</b></p>
+            <textarea name='receptor' class='form-control alto-correo-nuevo' placeholder='Destinatario' rows='8' cols='80' required='' disabled>$grupo"; ?></textarea>
+            <textarea name="asunto" class="form-control alto-correo-nuevo" placeholder='Asunto' rows="8" cols="80" required=""></textarea>
+            <textarea name="mensaje" class="alto-formulario form-control" placeholder='Cuerpo del mensaje...' rows="8" cols="80"></textarea>
+            <br>
+            <button type="submit" class="btn btn-success">Enviar</button>
+            <br><br>
+          </form>
 
       </div>
     </div>
@@ -298,7 +268,6 @@ if(!isset($_SESSION['username'])){
               <button onclick="myReload(this)" type="submit" name='enviarSpoty' class="btn-formulario sendbtn"> Enviar </button>
               <?php
               if(isset($_POST['enviarSpoty']) && $_POST['cuerpoSpoty'] != '') {
-
               	$db = @mysqli_connect('localhost','root','','SpotiChat');
                 mysqli_set_charset($db, 'utf8');
                 $texto=$_POST['cuerpoSpoty'];

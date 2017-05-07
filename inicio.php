@@ -36,7 +36,7 @@ if(!isset($_SESSION['username'])){
 <!-- <header>
   <nav id = 'nav' class="navbar navbar-default navbar-fixed-top topnav"  >
     <div class="container">
-      <a href="inicio.html"><img id = "logo" src="img/logos/logo_SpotiChat.png" alt="Logo SpotiChat"> </a>
+      <a href="inicio.php"><img id = "logo" src="img/logos/logo_SpotiChat.png" alt="Logo SpotiChat"> </a>
       <div class="dropdown alertas-menu">
           <button class="btn btn-secondary dropdown-toggle notifications" type="button" onclick="changeCompartir('compartir')"  data-toggle="dropdown">
             <span class="glyphicon glyphicon-leaf hidden-xs hidden-sm"> Redactar</span>
@@ -51,7 +51,7 @@ if(!isset($_SESSION['username'])){
   <nav id = 'nav' class="navbar navbar-default navbar-fixed-top topnav"  >
     <div class="container">
       <div class="" style="float:left;">
-        <a href="inicio.html"><img id = "logo" src="img/logos/logo_SpotiChat.png" alt="Logo SpotiChat" class="img-responsive"> </a>
+        <a href="inicio.php"><img id = "logo" src="img/logos/logo_SpotiChat.png" alt="Logo SpotiChat" class="img-responsive"> </a>
       </div>
 
       <div class="nav-header hidden-xs hidden-sm" style="float:left">
@@ -59,22 +59,38 @@ if(!isset($_SESSION['username'])){
           <li class="active"><a href="inicio.php">
           <i class="glyphicon glyphicon-home"></i>
           Home </a></li>
-          <li><a href="inicio.php">
-          <i class="glyphicon glyphicon-send"></i>
-          Grupos </a></li>
-          <li><a href="mensajes.php">
-          <i class="glyphicon glyphicon-envelope"></i>
           <?php
-            $db = @mysqli_connect('localhost','root','','SpotiChat');
-            $actual = $_SESSION['username'];
+          $db = @mysqli_connect('localhost','root','','SpotiChat');
+          mysqli_set_charset($db, 'utf8');
+          $actual = $_SESSION['username'];
+
+          echo "<li><a href='grupos.php'>
+          <i class='glyphicon glyphicon-send'></i>";
+          $sql="SELECT *  FROM miembros WHERE nick = '$actual' and sin_leer != 0";
+          $consulta=mysqli_query($db, $sql);
+          $nuevos = mysqli_num_rows($consulta);
+          if ($nuevos==0){
+            echo "  Grupos </a></li>";
+          }else{
+              echo "  Grupos <span class='badge'>$nuevos</span></a></li>";
+          }
+
+          echo "<li><a href='mensajes.php'>
+          <i class='glyphicon glyphicon-envelope'></i>";
+
             $sql="SELECT *  FROM mensajes
             WHERE receptor = '$actual' and borrado_receptor is false and leido is false";
             $consulta=mysqli_query($db, $sql);
             $nuevos = mysqli_num_rows($consulta);
             if ($nuevos==0){
-              echo "Mensajes</a></li>";
+              echo "  Mensajes</a></li>";
             }else{
-                echo "Mensajes <span class='badge'>$nuevos</span></a></li>";
+                echo "  Mensajes <span class='badge'>$nuevos</span></a></li>";
+            }
+            if($_SESSION['username'] =='admin'){
+              echo "<li><a href='crearGrupo.php'>
+              <i class='glyphicon glyphicon-edit'></i>
+              Crear Grupo </a></li>";
             }
            ?>
         </ul>
@@ -136,16 +152,24 @@ if(!isset($_SESSION['username'])){
               <a href="inicio.php">
               <i class="glyphicon glyphicon-home"></i>
               Home </a></li>
-              <li>
-              <a href="inicio.html">
-              <i class="glyphicon glyphicon-send"></i>
-              Grupos </a></li>
-              <li>
-                <a href="mensajes.php">
-              <i class="glyphicon glyphicon-envelope"></i>
               <?php
-                $db = @mysqli_connect('localhost','root','','SpotiChat');
-                $actual = $_SESSION['username'];
+              $db = @mysqli_connect('localhost','root','','SpotiChat');
+              mysqli_set_charset($db, 'utf8');
+              $actual = $_SESSION['username'];
+
+              echo "<li><a href='grupos.php'>
+              <i class='glyphicon glyphicon-send'></i>";
+              $sql="SELECT *  FROM miembros WHERE nick = '$actual' and sin_leer != 0";
+              $consulta=mysqli_query($db, $sql);
+              $nuevos = mysqli_num_rows($consulta);
+              if ($nuevos==0){
+                echo "Grupos </a></li>";
+              }else{
+                  echo "Grupos <span class='badge'>$nuevos</span></a></li>";
+              }
+
+              echo "<li><a href='mensajes.php'>
+              <i class='glyphicon glyphicon-envelope'></i>";
                 $sql="SELECT *  FROM mensajes
                 WHERE receptor = '$actual' and borrado_receptor is false and leido is false";
                 $consulta=mysqli_query($db, $sql);
@@ -155,6 +179,11 @@ if(!isset($_SESSION['username'])){
                 }else{
                     echo "Mensajes <span class='badge'>$nuevos</span></a></li>";
                 }
+                if($_SESSION['username'] =='admin'){
+                  echo "<li><a href='crearGrupo.php'>
+                  <i class='glyphicon glyphicon-edit'></i>
+                  Crear Grupo </a></li>";
+                }
                ?>
 
 					</ul>
@@ -162,7 +191,7 @@ if(!isset($_SESSION['username'])){
 				<!-- END MENU -->
 			</div>
 		</div>
-		<div class="col-xs-12 col-sm-12 col-md-9 over-scroll">
+		<div class="col-xs-12 col-sm-12 col-md-9">
       <div class="profile-content ">
 
         <?php
@@ -197,7 +226,7 @@ if(!isset($_SESSION['username'])){
               echo "<div class='panel-body back-white'>
                  <p> $mensajes->texto </p>
                  <center>
-                 <a href='crearMensaje.php?receptor=$mensajes->emisor&asunto=Re: $mensajes->asunto' class='btn btn-info' role='button'>Responder</a> <br/>";
+                 <a href='crearMensaje.php?receptor=$mensajes->emisor&asunto=Re: $mensajes->asunto' class='btn btn-success' role='button'>Responder</a> <br/>";
                  echo "</center>
                </div>
               </div>
@@ -239,6 +268,7 @@ if(!isset($_SESSION['username'])){
               <?php
               if(isset($_POST['enviarSpoty']) && $_POST['cuerpoSpoty'] != '') {
               	$db = @mysqli_connect('localhost','root','','SpotiChat');
+                mysqli_set_charset($db, 'utf8');
                 $texto=$_POST['cuerpoSpoty'];
                 $sql="SELECT id FROM mensajes";
                 $consulta=mysqli_query($db, $sql);
@@ -250,7 +280,7 @@ if(!isset($_SESSION['username'])){
                 $fecha = getdate();
                 $sql="INSERT INTO mensajes VALUES ('$id', '$asun', '$emisor', null, '$texto', NULL, '$fecha[year]-$fecha[mon]-$fecha[mday]', 0, 0, 0);";
             	  mysqli_query($db, $sql);
-                header("Location:inicio.php");
+                header("Location:redirectInicio.php");
               };
                ?>
             </center>
