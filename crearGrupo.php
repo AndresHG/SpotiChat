@@ -39,7 +39,7 @@ if(!isset($_SESSION['username']) or $_SESSION['username'] != 'admin'){
  		<select class="cuadro" type="text" name="genero" onchange="myFunction()" id="drop" required>
  		<?php
  			$estilos= array();
- 			$db = @mysqli_connect('localhost','root','','SpotiChat');
+ 			$db = @mysqli_connect('mysql.hostinger.es','u908911760_root','lopo23','u908911760_spoty');
       mysqli_set_charset($db, 'utf8');
 
  			$sql="SELECT * FROM generos";
@@ -66,7 +66,7 @@ if(!isset($_SESSION['username']) or $_SESSION['username'] != 'admin'){
   	$procesando=isset($_POST['grupo'])?$_POST['min_edad']:null;
  	if($procesando!=null){
 
- 		$db = @mysqli_connect('localhost','root','','SpotiChat');
+ 		$db = @mysqli_connect('mysql.hostinger.es','u908911760_root','lopo23','u908911760_spoty');
     mysqli_set_charset($db, 'utf8');
 
  		$grupo=$_POST['grupo'];
@@ -110,7 +110,7 @@ if(!isset($_SESSION['username']) or $_SESSION['username'] != 'admin'){
           mysqli_query($db, $sql);
         }
 
-        header('Location:inicio.php');
+        header('Location:index.php');
  			};
  		};
 

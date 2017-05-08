@@ -11,7 +11,7 @@
    $texto=$_POST['mensaje'];
 
  //conectamos con la bd
- $db = @mysqli_connect('localhost','root','','SpotiChat');
+ $db = @mysqli_connect('mysql.hostinger.es','u908911760_root','lopo23','u908911760_spoty');
  mysqli_set_charset($db, 'utf8');
  //consultamos el id del nuevo mensaje
  $sql="SELECT id FROM mensajes";
@@ -28,7 +28,7 @@
 
  mysqli_query($db, $sql);
 
- $sql ="UPDATE miembros SET sin_leer = sin_leer +1 WHERE nick != '$actual' and id_grupo = '$grupo';";
+ $sql ="UPDATE miembros SET sin_leer = sin_leer +1 WHERE nick != '$actual' and id_grupo = '$grupo' and sin_leer >= 0;";
  mysqli_query($db, $sql);
 
  header("Location:leerGrupo.php?grupo=$grupo");

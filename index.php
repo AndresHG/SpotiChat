@@ -36,7 +36,7 @@ if(!isset($_SESSION['username'])){
 <!-- <header>
   <nav id = 'nav' class="navbar navbar-default navbar-fixed-top topnav"  >
     <div class="container">
-      <a href="inicio.php"><img id = "logo" src="img/logos/logo_SpotiChat.png" alt="Logo SpotiChat"> </a>
+      <a href="index.php"><img id = "logo" src="img/logos/logo_SpotiChat.png" alt="Logo SpotiChat"> </a>
       <div class="dropdown alertas-menu">
           <button class="btn btn-secondary dropdown-toggle notifications" type="button" onclick="changeCompartir('compartir')"  data-toggle="dropdown">
             <span class="glyphicon glyphicon-leaf hidden-xs hidden-sm"> Redactar</span>
@@ -51,16 +51,16 @@ if(!isset($_SESSION['username'])){
   <nav id = 'nav' class="navbar navbar-default navbar-fixed-top topnav"  >
     <div class="container">
       <div class="" style="float:left;">
-        <a href="inicio.php"><img id = "logo" src="img/logos/logo_SpotiChat.png" alt="Logo SpotiChat" class="img-responsive"> </a>
+        <a href="index.php"><img id = "logo" src="img/logos/logo_SpotiChat.png" alt="Logo SpotiChat" class="img-responsive"> </a>
       </div>
 
       <div class="nav-header hidden-xs hidden-sm" style="float:left">
         <ul class="nav navbar-nav">
-          <li class="active"><a href="inicio.php">
+          <li class="active"><a href="index.php">
           <i class="glyphicon glyphicon-home"></i>
           Home </a></li>
           <?php
-          $db = @mysqli_connect('localhost','root','','SpotiChat');
+          $db = @mysqli_connect('mysql.hostinger.es','u908911760_root','lopo23','u908911760_spoty');
           mysqli_set_charset($db, 'utf8');
           $actual = $_SESSION['username'];
 
@@ -149,11 +149,11 @@ if(!isset($_SESSION['username'])){
 				<div class="profile-usermenu hidden-md hidden-lg">
 					<ul class="nav">
             <li class="active">
-              <a href="inicio.php">
+              <a href="index.php">
               <i class="glyphicon glyphicon-home"></i>
               Home </a></li>
               <?php
-              $db = @mysqli_connect('localhost','root','','SpotiChat');
+              $db = @mysqli_connect('mysql.hostinger.es','u908911760_root','lopo23','u908911760_spoty');
               mysqli_set_charset($db, 'utf8');
               $actual = $_SESSION['username'];
 
@@ -196,7 +196,7 @@ if(!isset($_SESSION['username'])){
 
         <?php
 
-      	$db = @mysqli_connect('localhost','root','','SpotiChat');
+      	$db = @mysqli_connect('mysql.hostinger.es','u908911760_root','lopo23','u908911760_spoty');
         mysqli_set_charset($db, 'utf8');
         $actual = $_SESSION['username'];
 
@@ -267,7 +267,7 @@ if(!isset($_SESSION['username'])){
               <button onclick="myReload(this)" type="submit" name='enviarSpoty' class="btn-formulario sendbtn"> Enviar </button>
               <?php
               if(isset($_POST['enviarSpoty']) && $_POST['cuerpoSpoty'] != '') {
-              	$db = @mysqli_connect('localhost','root','','SpotiChat');
+              	$db = @mysqli_connect('mysql.hostinger.es','u908911760_root','lopo23','u908911760_spoty');
                 mysqli_set_charset($db, 'utf8');
                 $texto=$_POST['cuerpoSpoty'];
                 $sql="SELECT id FROM mensajes";
@@ -280,7 +280,7 @@ if(!isset($_SESSION['username'])){
                 $fecha = getdate();
                 $sql="INSERT INTO mensajes VALUES ('$id', '$asun', '$emisor', null, '$texto', NULL, '$fecha[year]-$fecha[mon]-$fecha[mday]', 0, 0, 0);";
             	  mysqli_query($db, $sql);
-                header("Location:redirectInicio.php");
+                header("Location:redirectindex.php");
               };
                ?>
             </center>

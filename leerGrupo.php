@@ -37,7 +37,7 @@ if(!isset($_SESSION['username'])){
 <!-- <header>
   <nav id = 'nav' class="navbar navbar-default navbar-fixed-top topnav"  >
     <div class="container">
-      <a href="inicio.php"><img id = "logo" src="img/logos/logo_SpotiChat.png" alt="Logo SpotiChat"> </a>
+      <a href="index.php"><img id = "logo" src="img/logos/logo_SpotiChat.png" alt="Logo SpotiChat"> </a>
       <div class="dropdown alertas-menu">
           <button class="btn btn-secondary dropdown-toggle notifications" type="button" onclick="changeCompartir('compartir')"  data-toggle="dropdown">
             <span class="glyphicon glyphicon-leaf hidden-xs hidden-sm"> Redactar</span>
@@ -52,31 +52,41 @@ if(!isset($_SESSION['username'])){
   <nav id = 'nav' class="navbar navbar-default navbar-fixed-top topnav"  >
     <div class="container">
       <div class="" style="float:left;">
-        <a href="inicio.php"><img id = "logo" src="img/logos/logo_SpotiChat.png" alt="Logo SpotiChat" class="img-responsive"> </a>
+        <a href="index.php"><img id = "logo" src="img/logos/logo_SpotiChat.png" alt="Logo SpotiChat" class="img-responsive"> </a>
       </div>
 
       <div class="nav-header hidden-xs hidden-sm" style="float:left">
         <ul class="nav navbar-nav">
-          <li><a href="inicio.php">
+          <li><a href="index.php">
           <i class="glyphicon glyphicon-home"></i>
           Home </a></li>
-          <li><a href="grupos.php">
-          <i class="glyphicon glyphicon-send"></i>
-          Grupos </a></li>
-          <li><a href="mensajes.php">
-          <i class="glyphicon glyphicon-envelope"></i>
           <?php
-            $db = @mysqli_connect('localhost','root','','SpotiChat');
-            mysqli_set_charset($db, 'utf8');
-            $actual = $_SESSION['username'];
+          $db = @mysqli_connect('mysql.hostinger.es','u908911760_root','lopo23','u908911760_spoty');
+          mysqli_set_charset($db, 'utf8');
+          $actual = $_SESSION['username'];
+
+          echo "<li><a href='grupos.php'>
+          <i class='glyphicon glyphicon-send'></i>";
+          $sql="SELECT *  FROM miembros WHERE nick = '$actual' and sin_leer != 0";
+          $consulta=mysqli_query($db, $sql);
+          $nuevos = mysqli_num_rows($consulta);
+          if ($nuevos==0){
+            echo "  Grupos </a></li>";
+          }else{
+              echo "  Grupos <span class='badge'>$nuevos</span></a></li>";
+          }
+
+          echo "<li><a href='mensajes.php'>
+          <i class='glyphicon glyphicon-envelope'></i>";
+
             $sql="SELECT *  FROM mensajes
             WHERE receptor = '$actual' and borrado_receptor is false and leido is false";
             $consulta=mysqli_query($db, $sql);
             $nuevos = mysqli_num_rows($consulta);
             if ($nuevos==0){
-              echo "Mensajes</a></li>";
+              echo "  Mensajes</a></li>";
             }else{
-                echo "Mensajes <span class='badge'>$nuevos</span></a></li>";
+                echo "  Mensajes <span class='badge'>$nuevos</span></a></li>";
             }
             if($_SESSION['username'] =='admin'){
               echo "<li><a href='crearGrupo.php'>
@@ -140,20 +150,28 @@ if(!isset($_SESSION['username'])){
 				<div class="profile-usermenu hidden-md hidden-lg">
 					<ul class="nav">
             <li>
-              <a href="inicio.php">
+              <a href="index.php">
               <i class="glyphicon glyphicon-home"></i>
               Home </a></li>
-              <li>
-              <a href="grupos.php">
-              <i class="glyphicon glyphicon-send"></i>
-              Grupos </a></li>
-              <li>
-                <a href="mensajes.php">
-              <i class="glyphicon glyphicon-envelope"></i>
               <?php
-                $db = @mysqli_connect('localhost','root','','SpotiChat');
-                mysqli_set_charset($db, 'utf8');
-                $actual = $_SESSION['username'];
+              $db = @mysqli_connect('mysql.hostinger.es','u908911760_root','lopo23','u908911760_spoty');
+              mysqli_set_charset($db, 'utf8');
+              $actual = $_SESSION['username'];
+
+              echo "<li><a href='grupos.php'>
+              <i class='glyphicon glyphicon-send'></i>";
+              $sql="SELECT *  FROM miembros WHERE nick = '$actual' and sin_leer != 0";
+              $consulta=mysqli_query($db, $sql);
+              $nuevos = mysqli_num_rows($consulta);
+              if ($nuevos==0){
+                echo "Grupos </a></li>";
+              }else{
+                  echo "Grupos <span class='badge'>$nuevos</span></a></li>";
+              }
+
+              echo "<li><a href='mensajes.php'>
+              <i class='glyphicon glyphicon-envelope'></i>";
+
                 $sql="SELECT *  FROM mensajes
                 WHERE receptor = '$actual' and borrado_receptor is false and leido is false";
                 $consulta=mysqli_query($db, $sql);
@@ -180,7 +198,7 @@ if(!isset($_SESSION['username'])){
 
         <?php
 
-      	$db = @mysqli_connect('localhost','root','','SpotiChat');
+      	$db = @mysqli_connect('mysql.hostinger.es','u908911760_root','lopo23','u908911760_spoty');
         mysqli_set_charset($db, 'utf8');
         $actual = $_SESSION['username'];
         $grupo = htmlspecialchars($_GET["grupo"]);
@@ -268,7 +286,7 @@ if(!isset($_SESSION['username'])){
               <button onclick="myReload(this)" type="submit" name='enviarSpoty' class="btn-formulario sendbtn"> Enviar </button>
               <?php
               if(isset($_POST['enviarSpoty']) && $_POST['cuerpoSpoty'] != '') {
-              	$db = @mysqli_connect('localhost','root','','SpotiChat');
+              	$db = @mysqli_connect('mysql.hostinger.es','u908911760_root','lopo23','u908911760_spoty');
                 mysqli_set_charset($db, 'utf8');
                 $texto=$_POST['cuerpoSpoty'];
                 $sql="SELECT id FROM mensajes";
@@ -281,7 +299,7 @@ if(!isset($_SESSION['username'])){
                 $fecha = getdate();
                 $sql="INSERT INTO mensajes VALUES ('$id', '$asun', '$emisor', null, '$texto', NULL, '$fecha[year]-$fecha[mon]-$fecha[mday]', 0, 0, 0);";
             	  mysqli_query($db, $sql);
-                header("Location:inicio.php");
+                header("Location:index.php");
               };
                ?>
             </center>
