@@ -129,7 +129,7 @@ if(!isset($_SESSION['username'])){
 				<!-- SIDEBAR BUTTONS -->
         <form class="" action="" method="post">
           <div class="profile-userbuttons">
-  					<button onclick="window.location.href='miPerfil.html'" type="button" class="btn btn-success btn-sm">Mi perfil</button>
+  					<button onclick="window.location.href='miPerfil.php'" type="button" class="btn btn-success btn-sm">Mi perfil</button>
             <?php
               echo "<input type='submit' class='btn btn-danger btn-sm' name='logout' value='Logout' />";
 
@@ -195,11 +195,23 @@ if(!isset($_SESSION['username'])){
 
         <form class="container-fluid" action="enviarMensajePersonal.php" method="post">
           <p class="nuevo-mensaje"><b>Nuevo mensaje</b></p>
-          <textarea name="receptor" class="form-control alto-correo-nuevo" placeholder='Destinatario' rows="8" cols="80" required=""></textarea>
-          <textarea name="asunto" class="form-control alto-correo-nuevo" placeholder='Asunto' rows="8" cols="80" required=""></textarea>
-          <textarea name="mensaje" class="alto-formulario form-control" placeholder='Cuerpo del mensaje...' rows="8" cols="80"></textarea>
+          <?php
+          if(htmlspecialchars($_GET["receptor"]) != null){
+            $recep1 = htmlspecialchars($_GET["receptor"]);
+            echo "<textarea name='receptor' class='form-control alto-correo-nuevo' placeholder='Destinatario' rows='8' cols='80' required=''>$recep1</textarea>";
+          }else{
+            echo "<textarea name='receptor' class='form-control alto-correo-nuevo' placeholder='Destinatario' rows='8' cols='80' required=''></textarea>";
+          }
+          if(htmlspecialchars($_GET["asunto"]) != null){
+            $asunto1 = htmlspecialchars($_GET["asunto"]);
+            echo "<textarea name='asunto' class='form-control alto-correo-nuevo' placeholder='Asunto' rows='8' cols='80' required=''>$asunto1</textarea>";
+          }else{
+            echo "<textarea name='asunto' class='form-control alto-correo-nuevo' placeholder='Asunto' rows='8' cols='80' required=''></textarea>";
+          }
+           ?>
+          <textarea name='mensaje' class='alto-formulario form-control' placeholder='Cuerpo del mensaje...' rows='8' cols='80' required></textarea>
           <br>
-          <button type="submit" class="btn btn-success">Enviar</button>
+          <button type='submit' class='btn btn-success'>Enviar</button>
           <br><br>
         </form>
         <?php
@@ -244,7 +256,7 @@ if(!isset($_SESSION['username'])){
                  <br>
                  <div class='row'>
                    <div class='col-md-6 col-xs-6'>
-                      <a href='crearMensaje.php?receptor=$mensajes->emisor&asunto=$mensajes->asunto' class='btn btn-success flota-derecha' role='button'>Responder</a>
+                      <a href='mensajes.php?receptor=$mensajes->emisor&asunto=$mensajes->asunto' class='btn btn-success flota-derecha' role='button'>Responder</a>
                     </div>";
                    $nom2 = 'buton' . $mensajes->id;
                    echo "<div class='col-md-6 col-xs-6'>
@@ -255,6 +267,7 @@ if(!isset($_SESSION['username'])){
              				if(isset($_POST[$nom2])) {
              	    		$sql_del="UPDATE mensajes SET borrado_receptor = 1 where id = $mensajes->id;";
              					mysqli_query($db, $sql_del);
+                      header("Refresh:0");
              				};
                  echo "</div>
                </div>
@@ -288,7 +301,7 @@ if(!isset($_SESSION['username'])){
       <div class="container-fluid alto-formulario">
         <br>
 
-        <form method="post">
+        <form action='enviarSpoty.php' method="post">
             <div class="container-fluid">
               <textarea type="text" class="alto-formulario form-control" name="cuerpoSpoty" placeholder="Redacte su Spoty" name="" value=""></textarea>
             </div>
@@ -296,25 +309,6 @@ if(!isset($_SESSION['username'])){
             <center>
               <button onclick="changeCompartir('compartir')" type="button" class="btn-formulario cancelbtn">Cancel</button>
               <button onclick="myReload(this)" type="submit" name='enviarSpoty' class="btn-formulario sendbtn"> Enviar </button>
-              <?php
-              if(isset($_POST['enviarSpoty']) && $_POST['cuerpoSpoty'] != '') {
-
-              	include('config/connection.php');
-                mysqli_set_charset($db, 'utf8');
-                $texto=$_POST['cuerpoSpoty'];
-                $sql="SELECT id FROM mensajes";
-                $consulta=mysqli_query($db, $sql);
-                $id= mysqli_num_rows($consulta) + 1;
-                //usamos como emisor el usuario registrado
-                $emisor = $_SESSION['username'];
-                $asun = 'difundido' . $id;
-                //fecha actual
-                $fecha = getdate();
-                $sql="INSERT INTO mensajes VALUES ('$id', '$asun', '$emisor', null, '$texto', NULL, '$fecha[year]-$fecha[mon]-$fecha[mday]', 0, 0, 0);";
-            	  mysqli_query($db, $sql);
-                header("Location:index.php");
-              };
-               ?>
             </center>
         </form>
       <!-- formulario-container -->

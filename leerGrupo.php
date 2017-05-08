@@ -130,7 +130,7 @@ if(!isset($_SESSION['username'])){
 				<!-- SIDEBAR BUTTONS -->
         <form class="" action="" method="post">
           <div class="profile-userbuttons">
-  					<button onclick="window.location.href='miPerfil.html'" type="button" class="btn btn-success btn-sm">Mi perfil</button>
+  					<button onclick="window.location.href='miPerfil.php'" type="button" class="btn btn-success btn-sm">Mi perfil</button>
             <?php
               echo "<input type='submit' class='btn btn-danger btn-sm' name='logout' value='Logout' />";
 
@@ -276,7 +276,7 @@ if(!isset($_SESSION['username'])){
       <div class="container-fluid alto-formulario">
         <br>
 
-        <form method="post">
+        <form action='enviarSpoty.php' method="post">
             <div class="container-fluid">
               <textarea type="text" class="alto-formulario form-control" name="cuerpoSpoty" placeholder="Redacte su Spoty" name="" value=""></textarea>
             </div>
@@ -284,24 +284,6 @@ if(!isset($_SESSION['username'])){
             <center>
               <button onclick="changeCompartir('compartir')" type="button" class="btn-formulario cancelbtn">Cancel</button>
               <button onclick="myReload(this)" type="submit" name='enviarSpoty' class="btn-formulario sendbtn"> Enviar </button>
-              <?php
-              if(isset($_POST['enviarSpoty']) && $_POST['cuerpoSpoty'] != '') {
-              	include('config/connection.php');
-                mysqli_set_charset($db, 'utf8');
-                $texto=$_POST['cuerpoSpoty'];
-                $sql="SELECT id FROM mensajes";
-                $consulta=mysqli_query($db, $sql);
-                $id= mysqli_num_rows($consulta) + 1;
-                //usamos como emisor el usuario registrado
-                $emisor = $_SESSION['username'];
-                $asun = 'difundido' . $id;
-                //fecha actual
-                $fecha = getdate();
-                $sql="INSERT INTO mensajes VALUES ('$id', '$asun', '$emisor', null, '$texto', NULL, '$fecha[year]-$fecha[mon]-$fecha[mday]', 0, 0, 0);";
-            	  mysqli_query($db, $sql);
-                header("Location:index.php");
-              };
-               ?>
             </center>
         </form>
       <!-- formulario-container -->

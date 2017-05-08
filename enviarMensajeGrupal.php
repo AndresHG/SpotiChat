@@ -2,7 +2,7 @@
 
 
 <?php
-<?php include('config/vars.php');
+ include('config/vars.php');
   session_start();
  $procesando=isset($_POST['asunto'])?$_POST['asunto']:null;
  if($procesando!=null){

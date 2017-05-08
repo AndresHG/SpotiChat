@@ -26,6 +26,7 @@ if(!isset($_SESSION['username'])){
   <link rel="stylesheet" href="css/bootstrap.css">
   <link rel="stylesheet" href="css/inicio.css">
   <link rel="stylesheet" href="css/listaPartidos.css">
+  <link rel="stylesheet" href="css/mensajes.css">
 
   <!-- Add icon library -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -129,7 +130,7 @@ if(!isset($_SESSION['username'])){
 				<!-- SIDEBAR BUTTONS -->
         <form class="" action="" method="post">
           <div class="profile-userbuttons">
-  					<button onclick="window.location.href='miPerfil.html'" type="button" class="btn btn-success btn-sm">Mi perfil</button>
+  					<button onclick="window.location.href='miPerfil.php'" type="button" class="btn btn-success btn-sm">Mi perfil</button>
             <?php
               echo "<input type='submit' class='btn btn-danger btn-sm' name='logout' value='Logout' />";
 
@@ -194,6 +195,13 @@ if(!isset($_SESSION['username'])){
 		<div class="col-xs-12 col-sm-12 col-md-9">
       <div class="profile-content ">
 
+        <form class="container-fluid" action="enviarSpoty.php" method="post">
+          <textarea name="cuerpoSpoty" class="alto-formulario2 form-control" placeholder='¿Qué está pasando?' rows="8" cols="80"></textarea>
+          <br>
+          <button type="submit" class="btn btn-success flota-derecha">Publicar</button>
+          <br><br><br>
+        </form>
+
         <?php
 
       	include('config/connection.php');
@@ -214,9 +222,13 @@ if(!isset($_SESSION['username'])){
               <div class='panel-heading'>
                <div class='panel-title'>
                  <a>
-                   <div class='row' >
-                     <div class='col-xs-2 col-md-2 profile-userpic sin-padding-right'><img src='img/iconos/$imgSelected.png' class='img-responsive perfil-mensaje' alt=''></div>
-                     <div class='col-xs-5 col-md-3 texto-centrado'>$mensajes->emisor</div>
+                   <div class='row' >";
+                   if($mensajes->emisor == $actual){
+                     echo "<div class='col-xs-2 col-md-2 profile-userpic sin-padding-right'><img src='img/iconos/huevo.png' class='img-responsive perfil-mensaje' alt=''></div>";
+                   } else{
+                     echo "<div class='col-xs-2 col-md-2 profile-userpic sin-padding-right'><img src='img/iconos/$imgSelected.png' class='img-responsive perfil-mensaje' alt=''></div>";
+                   }
+                     echo "<div class='col-xs-5 col-md-3 texto-centrado'>$mensajes->emisor</div>
                      <div class='col-xs-5 col-md-2 col-md-offset-5 texto-centrado'>$mensajes->fecha</div>
                  </div>
                  </a>
@@ -226,8 +238,6 @@ if(!isset($_SESSION['username'])){
               echo "<div class='panel-body back-white'>
                  <p> $mensajes->texto </p>
                  <center>
-                 <a href='crearMensaje.php?receptor=$mensajes->emisor&asunto=Re: $mensajes->asunto' class='btn btn-success' role='button'>Responder</a> <br/>";
-                 echo "</center>
                </div>
               </div>
               </div>";
@@ -257,7 +267,7 @@ if(!isset($_SESSION['username'])){
       <div class="container-fluid alto-formulario">
         <br>
 
-        <form method="post">
+        <form action='enviarSpoty.php' method="post">
             <div class="container-fluid">
               <textarea type="text" class="alto-formulario form-control" name="cuerpoSpoty" placeholder="Redacte su Spoty" name="" value=""></textarea>
             </div>
@@ -265,24 +275,6 @@ if(!isset($_SESSION['username'])){
             <center>
               <button onclick="changeCompartir('compartir')" type="button" class="btn-formulario cancelbtn">Cancel</button>
               <button onclick="myReload(this)" type="submit" name='enviarSpoty' class="btn-formulario sendbtn"> Enviar </button>
-              <?php
-              if(isset($_POST['enviarSpoty']) && $_POST['cuerpoSpoty'] != '') {
-              	include('config/connection.php');
-                mysqli_set_charset($db, 'utf8');
-                $texto=$_POST['cuerpoSpoty'];
-                $sql="SELECT id FROM mensajes";
-                $consulta=mysqli_query($db, $sql);
-                $id= mysqli_num_rows($consulta) + 1;
-                //usamos como emisor el usuario registrado
-                $emisor = $_SESSION['username'];
-                $asun = 'difundido' . $id;
-                //fecha actual
-                $fecha = getdate();
-                $sql="INSERT INTO mensajes VALUES ('$id', '$asun', '$emisor', null, '$texto', NULL, '$fecha[year]-$fecha[mon]-$fecha[mday]', 0, 0, 0);";
-            	  mysqli_query($db, $sql);
-                header("Location:redirectindex.php");
-              };
-               ?>
             </center>
         </form>
       <!-- formulario-container -->

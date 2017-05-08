@@ -97,12 +97,20 @@
 	    			mysqli_query($db, $sql);
 				};
 
+				$sql="SELECT * FROM grupos WHERE '$edad' <= edad_max and '$edad' >= edad_min and genero = '$genero';";
+				$consulta = mysqli_query($db, $sql);
+
+				while($grupo=mysqli_fetch_object($consulta)){
+					$sql="INSERT INTO miembros VALUES ('$user', '$grupo->id', -1);";
+          mysqli_query($db, $sql);
+				}
+
 				$sql="INSERT INTO usuarios VALUES ('$user', '$pass', '$edad', '$genero');";
-	  			mysqli_query($db, $sql);
-					session_start();
-					$_SESSION['loggedin'] = true;
-					$_SESSION['username'] = $user;
-	  			header("Location: index.php");
+  			mysqli_query($db, $sql);
+				session_start();
+				$_SESSION['loggedin'] = true;
+				$_SESSION['username'] = $user;
+  			header("Location: index.php");
 			};
 		};
 

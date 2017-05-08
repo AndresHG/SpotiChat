@@ -19,3 +19,7 @@
 .nuevo-mensaje{
   font-size: 20px;
 }
+
+.alto-formulario2{
+  max-height: 85px;
+}
