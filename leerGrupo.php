@@ -61,7 +61,7 @@ if(!isset($_SESSION['username'])){
           <i class="glyphicon glyphicon-home"></i>
           Home </a></li>
           <?php
-          $db = @mysqli_connect('mysql.hostinger.es','u908911760_root','lopo23','u908911760_spoty');
+          include('config/connection.php');
           mysqli_set_charset($db, 'utf8');
           $actual = $_SESSION['username'];
 
@@ -154,7 +154,7 @@ if(!isset($_SESSION['username'])){
               <i class="glyphicon glyphicon-home"></i>
               Home </a></li>
               <?php
-              $db = @mysqli_connect('mysql.hostinger.es','u908911760_root','lopo23','u908911760_spoty');
+              include('config/connection.php');
               mysqli_set_charset($db, 'utf8');
               $actual = $_SESSION['username'];
 
@@ -198,7 +198,7 @@ if(!isset($_SESSION['username'])){
 
         <?php
 
-      	$db = @mysqli_connect('mysql.hostinger.es','u908911760_root','lopo23','u908911760_spoty');
+      	include('config/connection.php');
         mysqli_set_charset($db, 'utf8');
         $actual = $_SESSION['username'];
         $grupo = htmlspecialchars($_GET["grupo"]);
@@ -286,7 +286,7 @@ if(!isset($_SESSION['username'])){
               <button onclick="myReload(this)" type="submit" name='enviarSpoty' class="btn-formulario sendbtn"> Enviar </button>
               <?php
               if(isset($_POST['enviarSpoty']) && $_POST['cuerpoSpoty'] != '') {
-              	$db = @mysqli_connect('mysql.hostinger.es','u908911760_root','lopo23','u908911760_spoty');
+              	include('config/connection.php');
                 mysqli_set_charset($db, 'utf8');
                 $texto=$_POST['cuerpoSpoty'];
                 $sql="SELECT id FROM mensajes";

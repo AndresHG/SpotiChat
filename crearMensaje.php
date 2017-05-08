@@ -49,7 +49,7 @@ if(!isset($_SESSION['username'])){
 		$texto=$_POST['mensaje'];
 
 	//conectamos con la bd
-	$db = @mysqli_connect('mysql.hostinger.es','u908911760_root','lopo23','u908911760_spoty');
+	include('config/connection.php');
   mysqli_set_charset($db, 'utf8');
 	//consultamos el id del nuevo mensaje
 	$sql="SELECT id FROM mensajes";

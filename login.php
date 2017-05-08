@@ -39,13 +39,13 @@
 		$user=$_POST['user'];
 		$pass=$_POST['pass'];
 
-		$db = @mysqli_connect('mysql.hostinger.es','u908911760_root','lopo23','u908911760_spoty');
+		include('config/connection.php');
 
 		if (mysqli_connect_errno())
 	  {
 	  echo "Failed to connect to MySQL: " . mysqli_connect_error();
 	  }
-	
+
 		$sql="SELECT pass FROM usuarios WHERE nick='$user'";
 		$consulta=mysqli_query($db, $sql);
 

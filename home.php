@@ -23,7 +23,7 @@
 
 	session_start();
 
-	$db = @mysqli_connect('mysql.hostinger.es','u908911760_root','lopo23','u908911760_spoty');
+	include('config/connection.php');
 	mysqli_set_charset($db, 'utf8');
 
 		$actual = $_SESSION['username'];

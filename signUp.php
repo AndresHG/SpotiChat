@@ -32,7 +32,7 @@
 		<select class="cuadro" type="text" name="genero" onchange="myFunction()" id="drop" required>
 		<?php
 			$estilos= array();
-			$db = @mysqli_connect('mysql.hostinger.es','u908911760_root','lopo23','u908911760_spoty');
+			include('config/connection.php');
 			mysqli_set_charset($db, 'utf8');
 
 			$sql="SELECT * FROM generos";
@@ -59,7 +59,7 @@
  	$procesando=isset($_POST['user'])?$_POST['pass']:null;
 	if($procesando!=null){
 
-		$db = @mysqli_connect('mysql.hostinger.es','u908911760_root','lopo23','u908911760_spoty');
+		include('config/connection.php');
 		mysqli_set_charset($db, 'utf8');
 
 		$user=$_POST['user'];
