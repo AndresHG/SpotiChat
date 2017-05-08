@@ -1,6 +1,7 @@
 
 
 <?php
+<?php include('config/vars.php');
   session_start();
  $procesando=isset($_POST['receptor'])?$_POST['asunto']:null;
  if($procesando!=null){
