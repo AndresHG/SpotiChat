@@ -2,14 +2,14 @@
 <html>
 
 <head>
-	<title>Bolochat</title>
+	<title>Login</title>
 
 	  <!--Metadatos-->
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!--Links-->
   <!-- FavIcon -->
-  <link rel="icon" href="img/logos/Icono-Naranja.png" type="image/x-icon"/>
+  <link rel="icon" href="img/logos/Icon_Spotify.png" type="image/x-icon"/>
   <!-- CSS -->
   <link rel="stylesheet" href="css/bootstrap.css">
   <link rel="stylesheet" href="css/login2.css">
@@ -21,16 +21,27 @@
 
 <body>
 
-<div class="formulario col-md-3">
-
-	<form action="login.php" method="post">
-
-	 	<input class="cuadro" type="text" name="user" placeholder="Usuario" required><br> <br>
-	 	<input class="cuadro" type="text" name="pass" placeholder="Contraseña" required><br> <br>
-	 	<input class="button-mod" type="submit" value="Enviar">
- 	</form>
-
-</div>
+	<div class="container">
+      <div class="card card-container">
+          <img id="profile-img" class="profile-img-card" src="img/logos/Icon_Spotify.png" />
+          <p id="profile-name" class="profile-name-card"></p>
+          <form action="login.php" class="form-signin" method="post">
+              <span id="reauth-email" class="reauth-email"></span>
+              <input name="user" type="text" id="inputEmail" class="form-control" placeholder="User" required autofocus>
+              <input name="pass" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+              <div id="remember" class="checkbox">
+                  <label>
+                      <input type="checkbox" value="remember-me"> Remember me
+                  </label>
+              </div>
+              <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Entrar</button>
+          </form><!-- /form -->
+					No estas registrado?
+          <a href="signUp.php" class="forgot-password">
+              Regístrate
+          </a>
+      </div><!-- /card-container -->
+  </div><!-- /container -->
 
   <?php
  	$procesando=isset($_POST['user'])?$_POST['pass']:null;

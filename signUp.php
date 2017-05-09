@@ -13,6 +13,7 @@
   <!-- CSS -->
   <link rel="stylesheet" href="css/bootstrap.css">
   <link rel="stylesheet" href="css/signUp.css">
+	<link rel="stylesheet" href="css/login2.css">
 
   <!-- Add icon library -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -21,39 +22,40 @@
 
 <body>
 
-<div class="formulario col-md-3">
+<div class="container">
+		<div class="card card-container">
+				<img id="profile-img" class="profile-img-card" src="img/logos/Icon_Spotify.png" />
+				<p id="profile-name" class="profile-name-card"></p>
+				<form action="signUp.php" class="form-signin" method="post">
+						<span id="reauth-email" class="reauth-email"></span>
+						<input name="user" type="text" id="inputEmail" class="form-control" placeholder="User" required autofocus>
+						<input name="pass" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+						<input class="form-control" id="inputPassword2" type="password" name="rep_pass" placeholder="*Repita Contraseña" required>
+					 	<input class="form-control" id="inputEdad" type="number" name="nac"  min="0" max="9999" placeholder="*Año Nacimiento" required>
+						<p class="select-genero-margenes">Seleccione la categoria: <p>
+						<select class="form-control" id="inputGenero" type="text" name="genero" onchange="myFunction()" id="drop" required>
+						<?php
+							$estilos= array();
+							include('config/connection.php');
+							mysqli_set_charset($db, 'utf8');
 
-	<form action="signUp.php" method="post">
-
-	 	<input class="cuadro" type="text" name="user" placeholder="*Usuario" required><br> <br>
-	 	<input class="cuadro" type="text" name="pass" placeholder="*Contraseña" required><br> <br>
-	 	<input class="cuadro" type="text" name="rep_pass" placeholder="*Repita Contraseña" required><br> <br>
-	 	<input class="cuadro" type="number" name="nac"  min="0" max="9999" placeholder="*Año Nacimiento" required><br> <br>
-		<p>Seleccione la categoria<p>
-		<select class="cuadro" type="text" name="genero" onchange="myFunction()" id="drop" required>
-		<?php
-			$estilos= array();
-			include('config/connection.php');
-			mysqli_set_charset($db, 'utf8');
-
-			$sql="SELECT * FROM generos";
-		  $consulta=mysqli_query($db, $sql);
-		  while ($cat=mysqli_fetch_object($consulta)){
-		   	echo "<option> $cat->id </option> ";
-		  };
-			echo "<option> otro </option> ";
-			@mysqli_close($db);
-		?>
-		</select><br><br>
-		<div class="">
-			Si desea utilizar otro genero:
-			<input type="checkbox" name="otro_genero" id="yourBox" /><br><br>
-		</div>
-		<input class="cuadro" type="text" name="genero2" id="yourText" disabled /><br><br>
-	 	<input class="button-mod" type="submit" value="Enviar">
- 	</form>
-
-</div>
+							$sql="SELECT * FROM generos";
+						  $consulta=mysqli_query($db, $sql);
+						  while ($cat=mysqli_fetch_object($consulta)){
+						   	echo "<option> $cat->id </option> ";
+						  };
+							echo "<option> otro </option> ";
+							@mysqli_close($db);
+						?>
+						<input class="form-control" id="inputGenero2" type="text" name="genero2" id="yourText" disabled /><br><br>
+						<button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Register</button>
+				</form><!-- /form -->
+				Ya estas registrado?
+				<a href="login.php" class="forgot-password">
+						Login
+				</a>
+		</div><!-- /card-container -->
+</div><!-- /container -->
 
   <?php
 
