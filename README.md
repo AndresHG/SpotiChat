@@ -8,6 +8,8 @@ Descripción:
   - Control de no acceso a webs por link sin estar registrado
   - Posibilidad de responder a un Spoty transformandolo en un correo privado
   - Alerta de número de mensajes privados sin leer
+  - Contraseñas guardadas en MD5 para mayor seguridad
+  - Links del footer no implementados
   - Alerta de número de grupos sin leer
   - Apartado Spotys
     - Se pueden borrar solo los Spotys que has escrito tu, pero desde el perfil, no desde la portada

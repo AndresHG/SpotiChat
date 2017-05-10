@@ -49,7 +49,7 @@
 
 		$usuarios=array();
 		$user=$_POST['user'];
-		$pass=$_POST['pass'];
+		$pass=md5($_POST['pass']);
 
 		include('config/connection.php');
 

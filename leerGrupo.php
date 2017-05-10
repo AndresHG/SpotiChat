@@ -300,9 +300,9 @@ if(!isset($_SESSION['username'])){
               <div class="col-sm-4">
                  <div class = "center"><b>Join us</b> </div>
                 <hr>
-                <a href="signUp.html">Registrarse</a>
+                <a href="#">Registrarse</a>
                 <br>
-                <a href="login.html">Iniciar Sesión</a>
+                <a href="#">Iniciar Sesión</a>
               </div>
               <div class="col-sm-4">
                  <div class = "center"><b>Sobre Pachanga</b> </div>

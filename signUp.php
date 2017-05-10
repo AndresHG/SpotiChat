@@ -2,14 +2,14 @@
 <html>
 
 <head>
-	<title>SpotyChat</title>
+	<title>Register</title>
 
 	  <!--Metadatos-->
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!--Links-->
   <!-- FavIcon -->
-  <link rel="icon" href="img/logos/Icono-Naranja.png" type="image/x-icon"/>
+  <link rel="icon" href="img/logos/Icon_Spotify.png" type="image/x-icon"/>
   <!-- CSS -->
   <link rel="stylesheet" href="css/bootstrap.css">
   <link rel="stylesheet" href="css/signUp.css">
@@ -66,8 +66,8 @@
 		mysqli_set_charset($db, 'utf8');
 
 		$user=$_POST['user'];
-		$pass=$_POST['pass'];
-		$rep_pass=$_POST['rep_pass'];
+		$pass=md5($_POST['pass']);
+		$rep_pass=md5($_POST['rep_pass']);
 		$fecha = getdate();
 		$edad=$fecha['year'] - $_POST['nac'];
 		if($_POST['genero'] == 'otro' and isset($_POST['genero2'])){
