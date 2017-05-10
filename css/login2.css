@@ -107,8 +107,8 @@ body, html {
 
 .form-signin #inputEmail,
 .form-signin #inputPassword2,
-.form-signin #inputGenero,
-.form-signin #inputGenero2,
+.form-signin #drop,
+.form-signin #yourText,
 .form-signin #inputEdad,
 .form-signin #inputPassword {
     direction: ltr;
