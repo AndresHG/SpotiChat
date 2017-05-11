@@ -33,7 +33,7 @@
 						<input class="form-control" id="inputPassword2" type="password" name="rep_pass" placeholder="*Repita Contraseña" required>
 					 	<input class="form-control" id="inputEdad" type="number" name="nac"  min="0" max="9999" placeholder="*Año Nacimiento" required>
 						<p class="select-genero-margenes">Seleccione la categoria: <p>
-						<select class="form-control" id="drop" type="text" name="genero" onchange="myFunction()" id="drop" required>
+						<select class="form-control" id="drop" type="text" name="genero" onchange="myFunction()" required>
 						<?php
 							$estilos= array();
 							include('config/connection.php');
@@ -47,7 +47,7 @@
 							echo "<option> otro </option> ";
 							@mysqli_close($db);
 						?>
-						<input class="form-control" id="yourText" type="text" name="genero2" id="yourText" disabled /><br><br>
+						<input class="form-control" id="yourText" type="text" name="genero2" disabled /><br><br>
 						<button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Register</button>
 				</form><!-- /form -->
 				Ya estas registrado?
