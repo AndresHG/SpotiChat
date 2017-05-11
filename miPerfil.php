@@ -265,7 +265,7 @@ if(!isset($_SESSION['username'])){
     <div class="formulario formulario-container animateFormulario">
       <div class="header-formulario">
         <div class="centrar">
-          <a href="index.html"><img class = "logo-formulario" src="img/logos/logo_SpotiChat.png" alt="Logo Pachanga"> </a>
+          <a href="index.html"><img class = "logo-formulario" src="img/logos/logo_SpotiChat.png" alt="Logo SpotyChat"> </a>
         </div>
               <span onclick="changeCompartir('compartir')" class="closeFormulario" title="Close">&times;</span>
       </div>
@@ -302,9 +302,9 @@ if(!isset($_SESSION['username'])){
                 <a href="#">Iniciar Sesión</a>
               </div>
               <div class="col-sm-4">
-                 <div class = "center"><b>Sobre Pachanga</b> </div>
+                 <div class = "center"><b>Sobre SpotyChat</b> </div>
                 <hr>
-                <a href="#">¿Qué es Pachanga?</a>
+                <a href="#">¿Qué es SpotyChat?</a>
                 <br>
                 Preguntas Frecuentes
                 <br>
