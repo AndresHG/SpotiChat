@@ -195,7 +195,7 @@ if(!isset($_SESSION['username'])){
 		<div class="col-xs-12 col-sm-12 col-md-9">
       <div class="profile-content ">
 
-        <p class="nuevo-mensaje"><b>Tu actividad</b></p>
+        <center><p class="nuevo-mensaje"><b>Tu actividad</b></p></center>
         <br>
         <?php
 

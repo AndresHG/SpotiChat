@@ -210,6 +210,9 @@ if(!isset($_SESSION['username'])){
 
     		 	echo ' <br/><br/> No hay mensajes difundidos disponibles <br/><br/>';
     		}else{
+
+          echo "<center><p class='nuevo-mensaje'><b>$grupo</b></p></center><br>";
+
           while ($mensajes=mysqli_fetch_object($consulta)){
             $rand = rand(1, 5);
             $imgSelected = 'perfil' . $rand;
