@@ -24,7 +24,6 @@ if(!isset($_SESSION['username'])){
   <!-- CSS -->
   <link rel="stylesheet" href="css/bootstrap.css">
   <link rel="stylesheet" href="css/inicio.css">
-  <link rel="stylesheet" href="css/listaPartidos.css">
   <link rel="stylesheet" href="css/mensajes.css">
 
   <!-- Add icon library -->
